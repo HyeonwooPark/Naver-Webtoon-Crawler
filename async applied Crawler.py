@@ -50,8 +50,5 @@ async def download(srcs, epi_num):
 
 
 if __name__ == "__main__":
-    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as exe_search:
-        fus = [exe_search.submit(search, titleID, weekday, i)  for i in range(10)]
-        for f in concurrent.futures.as_completed(fus):
-            data = f.result()
-           
+    loop = asyncio.get_event_loop()
+    
