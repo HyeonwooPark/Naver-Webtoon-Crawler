@@ -16,7 +16,7 @@ import time
 titleID = 183559  
 title = "신의 탑"
 weekday = "mon"
-episode_number = 100     # 화 (에피소드)
+episode_number = 5     # 화 (에피소드)
 # 세팅 (변경 X)
 # ---------------------------------------------------------------------------------
 storage = f'{os.path.dirname(os.path.realpath(__file__))}\\{title}'
@@ -49,15 +49,15 @@ async def search_src(epi_num):
 
 async def download_image(EPISODE_NUMBER):
     header, srcs = await search_src(EPISODE_NUMBER)
-    
     i = 0
     for src in srcs :
         async with aiohttp.ClientSession() as session :
             async with session.get(src, headers=header) as res:
                 with open(f'{storage + "_raw"}\\{EPISODE_NUMBER}-{i}.png', 'wb') as outfile:
-                    content = await res.content.read()
-                    outfile.write(content)
+                    outfile.write(await res.content.read())
                     i += 1
+
+
 
 if __name__ == "__main__" :
     s = time.time()
