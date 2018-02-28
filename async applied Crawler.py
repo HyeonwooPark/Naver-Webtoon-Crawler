@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup as bs
-import numpy as np
 import requests
 import os
 import shutil
@@ -10,13 +9,14 @@ import asyncio
 import aiohttp
 import concurrent.futures
 import time
+
 # 변수 입력 
 # ---------------------------------------------------------------------------------
 
 titleID = 183559  
 title = "신의 탑"
 weekday = "mon"
-episode_number = 5     # 화 (에피소드)
+episode_number = 100     # 화 (에피소드)
 # 세팅 (변경 X)
 # ---------------------------------------------------------------------------------
 storage = f'{os.path.dirname(os.path.realpath(__file__))}\\{title}'
@@ -53,7 +53,7 @@ async def download_image(EPISODE_NUMBER):
     for src in srcs :
         async with aiohttp.ClientSession() as session :
             async with session.get(src, headers=header) as res:
-                with open(f'{storage + "_raw"}\\{EPISODE_NUMBER}-{i}.png', 'wb') as outfile:
+                with open(f'{storage + "_raw"}\\{EPISODE_NUMBER:03d}-{i:02d}.png', 'wb') as outfile:
                     outfile.write(await res.content.read())
                     i += 1
 
